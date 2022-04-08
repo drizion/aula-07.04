@@ -1,33 +1,31 @@
 import converter from "./lib/index.js";
 import readline from "readline";
+import { throws } from "assert";
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
 
-console.log('Ao conversor de unidades de temperatura!\n')
+console.log('Bem vindo ao conversor de unidades de temperatura!\n')
 
-rl.question('Digite o número da operação que você quer fazer?\n\n1 - Graus Celcius para Fahrenheit\n2- Graus Fahrenheit para Célcius\n\n Resposta:', function (operacao) {
+rl.question('Digite o número da operação que você quer fazer?\n\n(1) Graus Celcius para Fahrenheit\n(2) Graus Fahrenheit para Celcius\n\nEscolha: ', function (operacao) {
     switch(operacao){
         case '1': case '2': break
-        default:
-            console.log("operação incorreta")
-            rl.close()
-        break    
+        default: throw new Error('operação incorreta')
     }
-    rl.question('Digite o valor: ', function (x) {
+    rl.question('\nDigite o valor: ', function (x) {
         var res
         if(operacao == '1') {
-            res += converter.getFahrenheit(x)
+            res = converter.getFahrenheit(Number(x))
         } else {
-            res += converter.getCelcius(x)
+            res = converter.getCelcius(Number(x))
         }
             if(isNaN(res)) {
                 console.log("você não usou números")
                 rl.close()
             } 
-            console.log(`O resultado da operação foi ${res}`)
+            console.log(`\nO resultado da operação foi ${res}`)
             rl.close()
     });
   });
